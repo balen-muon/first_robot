@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ford_robot">
+
+    <xacro:include filename="inertial_macros.xacro"/>
+
+    <link name="world"/>
+
+
+    <link name="base_link">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.7 0.6 0.1"/>
+            </geometry>
+            <material name="">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+                <texture filename=""/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.7 0.6 0.1"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="5" x="0.7" y="0.6" z="0.1">
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <gazebo reference="base_link"> <!-- reference to a existing "link" -->
+        <material>Gazebo/Red</material>
+        <selfCollide>True</selfCollide>
+    </gazebo>
+
+    <joint name="base_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.135" rpy="0.0 0.0 0.0"/>
+        <parent link="world"/>
+        <child link="base_link"/>
+        <axis xyz="0.0 0.0 0.0"/>
+    </joint>
+
+
+    <!-- All Wheel links and joints -->
+    <xacro:macro name="wheel" params="name x y z">
+
+        <link name="${name}_wheel_link">
+            <visual name="">
+                <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.1" length="0.05"/>
+                </geometry>
+                <material name="black">
+                    <color rgba="1.0 1.0 0.0 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.1" length="0.05"/>
+                </geometry>
+            </collision>
+            <xacro:inertial_cylinder mass="0.75" length="0.05" radius="0.1">
+                <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 0.0"/>
+            </xacro:inertial_cylinder>
+        </link>
+
+        <!-- <gazebo reference="${name}_wheel_link">
+            <material>Gazebo/Yellow</material>
+        </gazebo> -->
+
+        <joint name="${name}_wheel_joint" type="continuous">
+            <origin xyz="${x} ${y} ${z}" rpy="0 0.0 0.0"/>
+            <parent link="base_link"/>
+            <child link="${name}_wheel_link"/>
+            <limit effort="100" lower="-3.14" upper="3.14" velocity="1.0"/>
+            <axis xyz=".0 1.0 0.0"/>
+        </joint>
+
+        <!-- This block provides the simulator (Gazebo) with information on a few additional
+        physical properties. See http://gazebosim.org/tutorials/?tut=ros_urdf for more-->
+        <gazebo reference="${name}_wheel_link">
+            <mu1 value="200.0"/>
+            <mu2 value="100.0"/>
+            <kp value="10000000.0" />
+            <kd value="1.0" />
+            <material>Gazebo/Grey</material>
+        </gazebo>
+
+    <!-- This block connects the wheel joint to an actuator (motor), which informs both
+    simulation and visualization of the robot -->
+    <transmission name="${name}_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="${name}_wheel_motor">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="${name}_wheel_joint">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+
+
+
+    </xacro:macro>
+
+
+    <!-- Wheel Creating using macros -->
+    <xacro:wheel name="front_left"  x="0.250" y ="0.325" z="-0.035"/>
+    <xacro:wheel name="rear_left" x="-0.250" y ="0.325" z="-0.035"/>
+    <xacro:wheel name="front_right"  x="0.250" y ="-0.325" z="-0.035"/>
+    <xacro:wheel name="rear_right"   x="-0.250" y =" -0.325" z="-0.035"/>
+
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/ford_robot</robotNamespace>
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        </plugin>
+    </gazebo>
+
+
+    <!-- <transmission name="${prefix}_${suffix}_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="${prefix}_${suffix}_wheel_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="${prefix}_${suffix}_wheel_joint">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+
+    <transmission name="tran2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="front_right_wheel_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="rear_left_wheel_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor3">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran4">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="front_left_wheel_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor4">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission> -->
+
+
+
+</robot>

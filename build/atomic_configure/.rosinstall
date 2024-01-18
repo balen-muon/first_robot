@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/muon/robot_ws/devel/setup.sh

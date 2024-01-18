@@ -1,0 +1,8 @@
+prefix=/home/muon/robot_ws/devel
+
+Name: ford_bot
+Description: Description of ford_bot
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
