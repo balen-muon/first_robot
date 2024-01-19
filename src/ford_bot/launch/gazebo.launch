@@ -4,7 +4,6 @@
     <param name="robot_description" command="xacro '$(find ford_bot)/description/ford_robot.urdf.xacro'"/>
 
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
-    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui"/>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="paused" value="false" />

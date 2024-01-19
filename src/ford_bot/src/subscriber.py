@@ -1,6 +1,6 @@
 import rospy
-from gazebo_msgs.msg import ModelStates, ModelState
-from geometry_msgs.msg import Twist
+from gazebo_msgs.msg import ModelStates
+from std_msgs.msg import Float64
 import time
 
 class RobotController:
@@ -8,7 +8,12 @@ class RobotController:
         self.rate = rate  # rate in Hz
         self.model_name = model_name
         self.last_print_time = 0
-        self.state_pub = rospy.Publisher('/gazebo/set_model_state', ModelState, queue_size=10)
+
+        # Publishers for each wheel
+        self.front_left_wheel_pub = rospy.Publisher('/ford_robot/front_left_wheel_position_controller/command', Float64, queue_size=10)
+        self.front_right_wheel_pub = rospy.Publisher('/ford_robot/front_right_wheel_position_controller/command', Float64, queue_size=10)
+        self.rear_left_wheel_pub = rospy.Publisher('/ford_robot/rear_left_wheel_position_controller/command', Float64, queue_size=10)
+        self.rear_right_wheel_pub = rospy.Publisher('/ford_robot/rear_right_wheel_position_controller/command', Float64, queue_size=10)
 
     def callback(self, data):
         current_time = time.time()
@@ -22,29 +27,27 @@ class RobotController:
                 print("x: {}, y: {}, z: {}".format(pose.position.x, pose.position.y, pose.position.z))
                 print("twist linear x: {}".format(twist.linear.x))
 
-                # Update and publish the new state
-                self.publish_new_state(pose, twist)
+                self.publish_wheel_commands()
 
                 self.last_print_time = current_time
             except ValueError:
                 rospy.logwarn("Model {} not found".format(self.model_name))
 
-    def publish_new_state(self, pose, twist):
-        new_state = ModelState()
-        new_state.model_name = self.model_name
-        new_state.pose = pose
-        new_state.twist = twist
+    def publish_wheel_commands(self):
+        # Example: Set wheel velocities
+        velocity = Float64()
+        velocity = 20.0  # Set your desired wheel velocity here
 
-        # Modify this to change the robot's behavior
-        new_state.twist.linear.x += 0.1  # Example: Increment linear x velocity
-
-        self.state_pub.publish(new_state)
+        self.front_left_wheel_pub.publish(velocity)
+        self.front_right_wheel_pub.publish(velocity)
+        self.rear_left_wheel_pub.publish(velocity)
+        self.rear_right_wheel_pub.publish(velocity)
 
 def main():
-    rospy.init_node('gazebo_robot_controller')
+    rospy.init_node('ford_robot_controller')
 
     # Set the control rate (e.g., 1 Hz) and the name of your robot model
-    controller = RobotController(rate=1, model_name='ford_robot')
+    controller = RobotController(rate=50, model_name='ford_robot')
     rospy.Subscriber('/gazebo/model_states', ModelStates, controller.callback)
 
     rospy.spin()
