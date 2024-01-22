@@ -36,7 +36,7 @@ class RobotController:
     def publish_wheel_commands(self):
         # Example: Set wheel velocities
         velocity = Float64()
-        velocity = 2.0  # Set your desired wheel velocity here
+        velocity = 0.01  # Set your desired wheel velocity here
 
         self.front_left_wheel_pub.publish(velocity)
         self.front_right_wheel_pub.publish(velocity)
