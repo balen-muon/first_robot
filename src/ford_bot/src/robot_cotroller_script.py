@@ -36,7 +36,7 @@ class RobotController:
     def publish_wheel_commands(self):
         # Example: Set wheel velocities
         velocity = Float64()
-        velocity = 20.0  # Set your desired wheel velocity here
+        velocity = 2.0  # Set your desired wheel velocity here
 
         self.front_left_wheel_pub.publish(velocity)
         self.front_right_wheel_pub.publish(velocity)
@@ -47,7 +47,7 @@ def main():
     rospy.init_node('ford_robot_controller')
 
     # Set the control rate (e.g., 1 Hz) and the name of your robot model
-    controller = RobotController(rate=50, model_name='ford_robot')
+    controller = RobotController(rate=60, model_name='ford_robot')
     rospy.Subscriber('/gazebo/model_states', ModelStates, controller.callback)
 
     rospy.spin()

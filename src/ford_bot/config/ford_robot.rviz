@@ -61,36 +61,41 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        world:
+        base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel_front_left_link:
+        base_footprint:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        wheel_front_right_link:
+        chassis:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        wheel_rear_left_link:
+        front_right_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        wheel_rear_right_link:
+        front_left_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-      Name: RobotModel
+        rear_right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rear_left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Name: ford_robot
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
@@ -101,17 +106,19 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        world:
+        base:
           Value: true
-        base_link:
+        base_footprint:
           Value: true
-        wheel_front_left_link:
+        chassis:
           Value: true
-        wheel_front_right_link:
+        front_right_wheel:
           Value: true
-        wheel_rear_left_link:
+        front_left_wheel:
           Value: true
-        wheel_rear_right_link:
+        rear_right_wheel:
+          Value: true
+        rear_left_wheel:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -120,16 +127,17 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        world:
-          base_link:
-            wheel_front_left_link:
-              {}
-            wheel_front_right_link:
-              {}
-            wheel_rear_left_link:
-              {}
-            wheel_rear_right_link:
-              {}
+        base:
+          base_footprint:
+            chassis:
+                front_right_wheel:
+                  {}
+                front_left_wheel:
+                  {}
+                rear_right_wheel:
+                  {}
+                rear_left_wheel:
+                  {}
       Update Interval: 0
       Value: true
   Enabled: true

@@ -1,0 +1,6 @@
+<launch>
+
+    <include file="$(find ford_bot)/launch/gazebo.launch"/>
+    <include file="$(find ford_robot_controller_pkg)/launch/controller.launch"/>
+
+</launch>

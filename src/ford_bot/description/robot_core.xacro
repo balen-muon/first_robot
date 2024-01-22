@@ -3,7 +3,7 @@
 
     <xacro:include filename="inertial_macros.xacro"/>
 
- 
+    
     <material name="white">
         <color rgba="1 1 1 1" />
     </material>
@@ -26,14 +26,14 @@
 
     <!-- BASE LINK -->
 
-    <link name="base_link">
+    <link name="base">
 
     </link>
 
     <!-- BASE_FOOTPRINT LINK -->
 
     <joint name="base_footprint_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base"/>
         <child link="base_footprint"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
@@ -45,7 +45,7 @@
     <!-- CHASSIS LINK -->
 
     <joint name="chassis_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="base_footprint"/>
         <child link="chassis"/>
         <origin xyz="0.0 0.0 0.15"/>
     </joint>
@@ -56,7 +56,7 @@
             <geometry>
                 <box size="0.7 0.6 0.1"/>
             </geometry>
-            <material name="orange"/>
+            <material name="red"/>
         </visual>
         <collision>
             <origin xyz="0.0 0.0 0.0"/>
@@ -70,7 +70,7 @@
     </link>
 
     <gazebo reference="chassis">
-        <material>Gazebo/Orange</material>
+        <material>Gazebo/Red</material>
     </gazebo>
 
        <!-- All Wheel links and joints -->
@@ -81,7 +81,7 @@
                 <geometry>
                     <cylinder radius="0.1" length="0.05"/>
                 </geometry>
-                <material name="black">
+                <material name="white">
                     <color rgba="1.0 1.0 0.0 1.0"/>
                 </material>
             </visual>
@@ -96,11 +96,15 @@
             </xacro:inertial_cylinder>
         </link>
 
+        <gazebo reference="${name}_wheel">
+            <material>Gazebo/White</material>
+        </gazebo>
+
         <joint name="${name}_wheel_joint" type="continuous">
             <origin xyz="${x} ${y} ${z}" rpy="0 0.0 0.0"/>
             <parent link="chassis"/>
             <child link="${name}_wheel"/>
-            <limit effort="1000.0" velocity="1.0"/>
+            <limit effort="1000.0" velocity="5.0"/>
             <axis xyz=".0 1.0 0.0"/>
         </joint>
 
