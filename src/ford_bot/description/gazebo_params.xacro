@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<gazebo reference="chassis">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Red</material>
+</gazebo>
+
+<gazebo reference="front_right_wheel">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Yellow</material>
+</gazebo>
+
+<gazebo reference="front_left_wheel">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Yellow</material>
+</gazebo>
+
+<gazebo reference="rear_right_wheel">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Yellow</material>
+</gazebo>
+
+<gazebo reference="rear_left_wheel">
+<mu1>0.2</mu1>
+<mu2>0.2</mu2>
+<material>Gazebo/Yellow</material>
+</gazebo>
+
+<!-- Controller for the 4-wheeled robot -->
+<gazebo>
+    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+        <!-- Control update rate in Hz -->    
+        <updateRate>100.0</updateRate>
+
+        <!-- Leave empty otherwise there will be problems with sending control commands -->
+        <robotNamespace> </robotNamespace>
+
+        <!-- Robot kinematics -->
+        <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+        <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+        <leftRearJoint>rear_left_wheel_joint</leftRearJoint>
+        <rightRearJoint>rear_right_wheel_joint</rightRearJoint>
+        <wheelSeparation>0.65</wheelSeparation>
+        <wheelDiameter>0.2</wheelDiameter>
+
+        <!-- Maximum torque which the wheels can produce, in Nm, defaults to 5 Nm -->
+        <torque>1000</torque>
+
+        <!-- Topic to reveive -->
+        <commandTopic>cmd_vel</commandTopic>
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>odom</odometryFrame>
+        <robotBaseFrame>base</robotBaseFrame>
+        <publishWheelTF>true</publishWheelTF>
+        <publishOdom>true</publishOdom>
+        <publishJointState>true</publishJointState>
+
+        <covariance_x>0.0001</covariance_x>
+        <covariance_y>0.0001</covariance_y>
+        <covariance_yaw>0.01</covariance_yaw>
+
+
+
+    </plugin>
+</gazebo>
+</robot>

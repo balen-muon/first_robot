@@ -3,6 +3,7 @@
 
     <xacro:include filename="inertial_macros.xacro"/>
 
+    <xacro:include filename="gazebo_params.xacro"/>
     
     <material name="white">
         <color rgba="1 1 1 1" />
@@ -68,10 +69,16 @@
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         </xacro:inertial_box>
     </link>
-
+<!-- 
     <gazebo reference="chassis">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
         <material>Gazebo/Red</material>
-    </gazebo>
+    </gazebo> -->
+
+    <!-- <gazebo reference="chassis">
+        <material>Gazebo/Red</material>
+    </gazebo> -->
 
        <!-- All Wheel links and joints -->
     <xacro:macro name="wheel" params="name x y z">
@@ -96,9 +103,15 @@
             </xacro:inertial_cylinder>
         </link>
 
-        <gazebo reference="${name}_wheel">
+        <!-- <gazebo reference="${name}_wheel">
+            <mu1>0.2</mu1>
+            <mu2>0.2</mu2>
+            <material>Gazebo/Yellow</material>
+        </gazebo> -->
+
+        <!-- <gazebo reference="${name}_wheel">
             <material>Gazebo/White</material>
-        </gazebo>
+        </gazebo> -->
 
         <joint name="${name}_wheel_joint" type="continuous">
             <origin xyz="${x} ${y} ${z}" rpy="0 0.0 0.0"/>
@@ -110,7 +123,7 @@
 
             <!-- This block connects the wheel joint to an actuator (motor), which informs both
     simulation and visualization of the robot -->
-        <transmission name="${name}_wheel_transmission">
+        <!-- <transmission name="${name}_wheel_transmission">
         <type>transmission_interface/SimpleTransmission</type>
         <actuator name="${name}_wheel_actuator">
             <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
@@ -119,7 +132,7 @@
         <joint name="${name}_wheel_joint">
             <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         </joint>
-        </transmission>
+        </transmission> -->
     </xacro:macro>
 
     <!-- Wheel Creating using macros -->
@@ -129,11 +142,12 @@
     <xacro:wheel name="rear_right"   x="-0.250" y ="-0.325" z="-0.055"/>
 
 
-    <gazebo>
+    <!-- <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
             <robotNamespace>/ford_robot</robotNamespace>
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+            <commandTopic>cmd_vel</commandTopic>
         </plugin>
-    </gazebo>
+    </gazebo> -->
 
 </robot>
