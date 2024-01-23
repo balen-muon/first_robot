@@ -5,31 +5,31 @@
 <gazebo reference="chassis">
 <mu1>0.2</mu1>
 <mu2>0.2</mu2>
-<material>Gazebo/Red</material>
+<material>Gazebo/Green</material>
 </gazebo>
 
 <gazebo reference="front_right_wheel">
 <mu1>0.2</mu1>
 <mu2>0.2</mu2>
-<material>Gazebo/Yellow</material>
+<material>Gazebo/White</material>
 </gazebo>
 
 <gazebo reference="front_left_wheel">
 <mu1>0.2</mu1>
 <mu2>0.2</mu2>
-<material>Gazebo/Yellow</material>
+<material>Gazebo/White</material>
 </gazebo>
 
 <gazebo reference="rear_right_wheel">
 <mu1>0.2</mu1>
 <mu2>0.2</mu2>
-<material>Gazebo/Yellow</material>
+<material>Gazebo/White</material>
 </gazebo>
 
 <gazebo reference="rear_left_wheel">
 <mu1>0.2</mu1>
 <mu2>0.2</mu2>
-<material>Gazebo/Yellow</material>
+<material>Gazebo/White</material>
 </gazebo>
 
 <!-- Controller for the 4-wheeled robot -->
@@ -56,7 +56,7 @@
         <commandTopic>cmd_vel</commandTopic>
         <odometryTopic>odom</odometryTopic>
         <odometryFrame>odom</odometryFrame>
-        <robotBaseFrame>base</robotBaseFrame>
+        <robotBaseFrame>base_footprint</robotBaseFrame>
         <publishWheelTF>true</publishWheelTF>
         <publishOdom>true</publishOdom>
         <publishJointState>true</publishJointState>
@@ -64,8 +64,6 @@
         <covariance_x>0.0001</covariance_x>
         <covariance_y>0.0001</covariance_y>
         <covariance_yaw>0.01</covariance_yaw>
-
-
 
     </plugin>
 </gazebo>
