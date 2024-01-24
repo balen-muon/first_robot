@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ford_robot">
 
     <xacro:include filename="$(find ford_bot)/description/robot_core.xacro"/>
+    <!-- <xacro:include filename="$(find ford_bot)/description/test_robot.xacro"/> -->
     <xacro:include filename="$(find ford_bot)/description/lidar.xacro"/>
 
 </robot>
