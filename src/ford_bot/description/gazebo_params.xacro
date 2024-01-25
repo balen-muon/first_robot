@@ -36,7 +36,7 @@
     <gazebo>
         <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
             <!-- Control update rate in Hz -->    
-            <updateRate>5.0</updateRate>
+            <updateRate>100.0</updateRate>
 
             <!-- Leave empty otherwise there will be problems with sending control commands -->
             <robotNamespace> </robotNamespace>
@@ -50,20 +50,23 @@
             <wheelDiameter>0.2</wheelDiameter>
 
             <!-- Maximum torque which the wheels can produce, in Nm, defaults to 5 Nm -->
-            <torque>1000</torque>
+            <torque>100</torque>
 
-            <!-- Topic to reveive -->
+            <!-- Topic to receive -->
             <commandTopic>cmd_vel</commandTopic>
             <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
             <robotBaseFrame>base_link</robotBaseFrame>
-            <publishWheelTF>true</publishWheelTF>
+            <broadcastTF>true</broadcastTF>
+            <!-- <publishWheelTF>true</publishWheelTF>
             <publishOdom>true</publishOdom>
-            <publishJointState>true</publishJointState>
+            <publishOdomFrame>true</publishOdomFrame>
+            <publishJointState>true</publishJointState> -->
 
             <covariance_x>0.0001</covariance_x>
             <covariance_y>0.0001</covariance_y>
             <covariance_yaw>0.01</covariance_yaw>
+
 
         </plugin>
     </gazebo>
