@@ -132,7 +132,6 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/muon/robot_ws/build/gtest/cmake_install.cmake")
   include("/home/muon/robot_ws/build/ford_bot/cmake_install.cmake")
-  include("/home/muon/robot_ws/build/ford_robot_controller_pkg/cmake_install.cmake")
 
 endif()
 

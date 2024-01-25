@@ -1,2 +1,2 @@
-ford_bot:ford_robot_controller_pkg
+ford_bot
 -DCATKIN_DEVEL_PREFIX=/home/muon/robot_ws/devel -DCMAKE_INSTALL_PREFIX=/home/muon/robot_ws/install -G Unix Makefiles
